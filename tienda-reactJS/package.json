@@ -1,0 +1,28 @@
+{
+    "name": "tienda-reactjs",
+    "version": "1.0.0",
+    "description": "Proyecto final de una tienda usando ReactJS",
+    "main": "index.js",
+    "scripts": {
+        "start": "webpack-dev-server --hot"
+    },
+    "keywords": [
+        "reactjs"
+    ],
+    "author": "Dueynn Ogaz Siller",
+    "license": "ISC",
+    "dependencies": {
+        "babel-core": "^6.26.3",
+        "babel-loader": "^7.1.4",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-react": "^6.24.1",
+        "react": "^16.4.1",
+        "react-dom": "^16.4.1",
+        "react-router-dom": "^4.3.1",
+        "webpack": "^4.12.0",
+        "webpack-dev-server": "^3.1.4"
+    },
+    "devDependencies": {
+        "webpack-cli": "^3.0.8"
+    }
+}
