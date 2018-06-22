@@ -1,7 +1,7 @@
 const path = require('path');
 
 var config = {
-    entry: './main.js',
+    entry: './client/main.js',
     output: {
         path: path.resolve(__dirname, './'),
         filename: 'index.js',

@@ -1,5 +1,5 @@
 import React from 'react';
-import style from "../css/login.css";
+import style from "./css/login.css";
 import * as request from 'superagent';
 
 class Login extends React.Component {
@@ -36,14 +36,14 @@ class Login extends React.Component {
 
     }
     login() {
-        request.get('../backend/backend.php')
-            .set({
-                'API-Key': 'LndkOnelk2232nl23k',
-                'Content-Type': 'application/json'
-            })
-            .end((err, res) => {
-                console.log(res);
-            });
+        // request.get('../backend/backend.php')
+        //     .set({
+        //         'API-Key': 'LndkOnelk2232nl23k',
+        //         'Content-Type': 'application/json'
+        //     })
+        //     .end((err, res) => {
+        //         console.log(res);
+        //     });
     }
 }
 
