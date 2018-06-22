@@ -1,0 +1,42 @@
+* {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+}
+body {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    position: absolute;
+}
+h1 {
+    font-weight: 400;
+}
+div#app {
+    background: url(../img/login-fondo.jpg) no-repeat top;
+    -webkit-background-size: cover;
+    background-size: cover;
+    height: 100%;
+}
+.no-padding {
+    padding: 0;
+}
+.no-padding-sides {
+    padding-left: 0;
+    padding-right: 0;
+}
+.no-margin {
+    margin: 0;
+}
+.no-margin-sides {
+    margin-left: 0;
+    margin-right: 0;
+}
+.vertical-center {
+    min-height: 100%;
+    /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh;
+    /* These two lines are counted as one :-)       */
+    display: flex;
+    align-items: center;
+}
