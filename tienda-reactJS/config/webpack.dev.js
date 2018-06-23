@@ -26,16 +26,24 @@ var config = {
 
     module: {
         rules: [{
-            test: /\.jsx?$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader',
-            query: {
-                presets: ['env', 'react']
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['env', 'react']
+                }
+            }, {
+                test: /\.css$/,
+                loader: "style-loader!css-loader"
+            },
+            {
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                use: [
+                    'url-loader?limit=10000',
+                    'img-loader'
+                ]
             }
-        }, {
-            test: /\.css$/,
-            loader: "style-loader!css-loader"
-        }],
+        ],
     },
 
     mode: 'development',

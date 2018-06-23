@@ -1,6 +1,7 @@
 import React from 'react';
-import style from "../assets/css/login.css";
 import * as request from 'superagent';
+
+import style from "../assets/css/login.css";
 
 class Login extends React.Component {
 
