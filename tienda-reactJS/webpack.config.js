@@ -1,33 +1,11 @@
-const path = require('path');
+switch (process.env.NODE_ENV) {
+  case 'prod':
+  case 'production':
+    // module.exports = require('./config/webpack.prod');
+    // break;
 
-var config = {
-    entry: './client/main.js',
-    output: {
-        path: path.resolve(__dirname, './'),
-        filename: 'index.js',
-        publicPath: '/'
-    },
-    devServer: {
-        inline: true,
-        port: 8080,
-        historyApiFallback: true
-    },
-
-    module: {
-        rules: [{
-            test: /\.jsx?$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader',
-            query: {
-                presets: ['env', 'react']
-            }
-        }, {
-            test: /\.css$/,
-            loader: "style-loader!css-loader"
-        }],
-    },
-
-    mode: 'development'
-};
-
-module.exports = config;
+  case 'dev':
+  case 'development':
+  default:
+    module.exports = require('./config/webpack.dev');
+}
