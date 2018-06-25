@@ -1,29 +1,35 @@
 const User = require('../../models/User.js');
 
 module.exports = (app) => {
-    // app.get('/api/users', function(req, res) {
-    //     User.find({}).exec(function(err, docs) {
-    //         if (err) {
-    //             res.status(500);
-    //             res.json(err);
-    //         }
-    //         res.json(docs);
-    //     });
-    // });
+    app.get('/api/users', function(req, res) {
+        User.find({}).exec(function(err, docs) {
+            if (err) {
+                res.status(500);
+                res.json(err);
+            }
+            res.json(docs);
+        });
+    });
     app.post('/api/login', function(req, res) {
         let email = req.body.email
         let password = req.body.password
+
         User.findOne({
             chrEmail: email,
             chrPassword: password,
-            estado: 1
-        }).exec(function(err, doc) {
+            intActive: 1
+        }).exec(function(err, user) {
             if (err) {
                 res.status(500)
                 res.json(err)
             }
-            res.json(doc)
-        })
+            if (!user) {
+                res.json({result: 'failed'});
+            } else {
+                res.json({result: 'login'});
+            }
+            // res.json(user)
+        });
     });
     app.post('/api/user/new', function(req, res) {
         let user = new User({

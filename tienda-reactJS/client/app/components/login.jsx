@@ -7,33 +7,76 @@ class Login extends React.Component {
 
     constructor() {
         super()
+        this.login = this.login.bind(this);
         this.state = {
-            emailValue: '',
+            email: '',
             emailError: '',
             emailErrorMsg: 'Ingrese correo.',
-            passwordValue: '',
             passwordError: '',
+            password: '',
             passwordErrorMsg: 'Ingrese contraseña.'
         }
     }
-    componentWillMount(){
 
+    onChange(e) {
+        var value = e.target.value.trim();
+        this.validate(e.target.id, value);
+        this.setState({
+            [e.target.id]: e.target.value
+        });
     }
+
+    validate(input, value) {
+        switch (input) {
+            case 'email':
+                if (value == '' || !this.validateEmail(value)) {
+                    this.setState({
+                        emailError: ' is-invalid',
+                        emailErrorMsg: 'Ingrese un correo válido.'
+                    });
+                } else {
+                    this.setState({
+                        emailError: '',
+                    });
+                }
+                break;
+            case 'password':
+                if (value == '') {
+                    this.setState({
+                        passwordError: ' is-invalid',
+                        passwordErrorMsg: 'Ingrese la contraseña.'
+                    });
+                } else {
+                    this.setState({
+                        passwordError: '',
+                    });
+                }
+                break;
+            default:
+
+        }
+    }
+
+    validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
     render() {
         return (
             <div className="container-fluid">
                 <div className="row vertical-center">
                     <div className="col-md-6 offset-md-3 col-lg-4 offset-lg-4 login-container">
                         <h1>Inicia Sesión</h1>
-                        <form>
+                        <form id="login-form">
                             <div className="form-group">
                                 <label htmlFor="email">Correo electrónico</label>
-                                <input type="email" className={'form-control' + this.state.emailError} id="email" value={this.state.emailValue} onChange={evt => this.updateEmailValue(evt)} required/>
+                                <input type="email" className={'form-control' + this.state.emailError} id="email" value={this.state.email} onChange={e => this.onChange(e)} required/>
                                 <div className="invalid-feedback">{this.state.emailErrorMsg}</div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="password">Contraseña</label>
-                                <input type="password" className={'form-control' + this.state.passwordError} id="password" value={this.state.passwordValue} onChange={evt => this.updatePasswordValue(evt)} required/>
+                                <input type="password" className={'form-control' + this.state.passwordError} id="password" value={this.state.password} onChange={e => this.onChange(e)} required/>
                                 <div className="invalid-feedback">{this.state.passwordErrorMsg}</div>
                             </div>
                             <button type="button" onClick={this.login} className="btn btn-success">Ingresar</button>
@@ -43,48 +86,34 @@ class Login extends React.Component {
             </div>
         )
     }
-    updateEmailValue(evt) {
-        var value = evt.target.value.trim();
-        if (value == '') {
-            this.setState({
-                emailError: ' is-invalid',
-                emailErrorMsg: 'Ingrese correo.'
-            });
-        } else {
-            this.setState({
-                emailError: '',
-            });
-        }
-        this.setState({
-            emailValue: evt.target.value
-        });
-    }
-    updatePasswordValue(evt) {
-        var value = evt.target.value.trim();
-        if (value == '') {
-            this.setState({
-                passwordError: ' is-invalid',
-                passwordErrorMsg: 'Ingrese correo.'
-            });
-        } else {
-            this.setState({
-                passwordError: '',
-            });
-        }
-        this.setState({
-            passwordValue: evt.target.value
-        });
-    }
+
     login() {
-        console.log('Hello');
-        // request.get('/api/users')
-        //     .set({
-        //         'API-Key': 'LndkOnelk2232nl23k',
-        //         'Content-Type': 'application/json'
-        //     })
-        //     .end((err, res) => {
-        //         console.log(res);
-        //     });
+        var email = document.getElementById('email').value.trim();
+        var password = document.getElementById('password').value;
+        request.post('/api/login')
+            .set({
+                'API-Key': 'LndkOnelk2232nl23k',
+                'Content-Type': 'application/json'
+            })
+            .send({
+                email: email,
+                password: password
+            })
+            .end((err, res) => {
+                if (err) {
+                    alert(err);
+                } else {
+                    if (res.body.result == 'login') {
+                        this.props.history.push('/dashboard');
+                    } else {
+                        this.setState({
+                            password: '',
+                            passwordError: ' is-invalid',
+                            passwordErrorMsg: 'Contraseña incorrecta.'
+                        });
+                    }
+                }
+            });
     }
 }
 

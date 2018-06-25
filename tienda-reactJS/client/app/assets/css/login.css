@@ -6,3 +6,10 @@
 .form-group {
     text-align: left;
 }
+.invalid-feedback {
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 0.15rem 0.75rem;
+    color: #d30000;
+    font-weight: 600;
+    border-radius: .25rem;
+}
