@@ -19,9 +19,6 @@ a:hover {
     color: white;
 }
 div.container-fluid {
-    background: url(../img/login-fondo.jpg) no-repeat top;
-    -webkit-background-size: cover;
-    background-size: cover;
     height: 100%;
 }
 .no-padding {
@@ -45,4 +42,11 @@ div.container-fluid {
     /* These two lines are counted as one :-)       */
     display: flex;
     align-items: center;
+}
+.fill-height {
+    min-height: 100%;
+    /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh;
+    /* These two lines are counted as one :-)       */
+    display: flex;
 }

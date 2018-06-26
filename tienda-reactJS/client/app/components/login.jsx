@@ -11,10 +11,10 @@ class Login extends React.Component {
         this.state = {
             email: '',
             emailError: '',
-            emailErrorMsg: 'Ingrese correo.',
+            emailErrorMsg: 'Ingrese su correo.',
             passwordError: '',
             password: '',
-            passwordErrorMsg: 'Ingrese contraseña.'
+            passwordErrorMsg: 'Ingrese la contraseña.'
         }
     }
 
@@ -64,9 +64,9 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid">
+            <div className="container-fluid login-container">
                 <div className="row vertical-center">
-                    <div className="col-md-6 offset-md-3 col-lg-4 offset-lg-4 login-container">
+                    <div className="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
                         <h1>Inicia Sesión</h1>
                         <form id="login-form">
                             <div className="form-group">
@@ -90,30 +90,54 @@ class Login extends React.Component {
     login() {
         var email = document.getElementById('email').value.trim();
         var password = document.getElementById('password').value;
-        request.post('/api/login')
-            .set({
-                'API-Key': 'LndkOnelk2232nl23k',
-                'Content-Type': 'application/json'
-            })
-            .send({
-                email: email,
-                password: password
-            })
-            .end((err, res) => {
-                if (err) {
-                    alert(err);
-                } else {
-                    if (res.body.result == 'login') {
-                        this.props.history.push('/dashboard');
+        if (email != '' && password != '') {
+            request.post('/api/login')
+                .set({
+                    'API-Key': 'LndkOnelk2232nl23k',
+                    'Content-Type': 'application/json'
+                })
+                .send({
+                    email: email,
+                    password: password
+                })
+                .end((err, res) => {
+                    if (err) {
+                        alert(err);
                     } else {
-                        this.setState({
-                            password: '',
-                            passwordError: ' is-invalid',
-                            passwordErrorMsg: 'Contraseña incorrecta.'
-                        });
+                        if (res.body.result == 'login') {
+                            this.props.history.push('/dashboard');
+                        } else {
+                            this.setState({
+                                password: '',
+                                passwordError: ' is-invalid',
+                                passwordErrorMsg: 'Contraseña incorrecta.'
+                            });
+                        }
                     }
+                });
+
+        } else {
+            if (email == '') {
+                this.setState({
+                    email: '',
+                    emailError: ' is-invalid',
+                    emailErrorMsg: 'Ingrese su correo.'
+                });
+                if (password == '') {
+                    this.setState({
+                        password: '',
+                        passwordError: ' is-invalid',
+                        passwordErrorMsg: 'Ingrese la contraseña.'
+                    });
                 }
-            });
+            } else {
+                this.validate('email', email);
+                if (this.validateEmail(email)) {
+                    this.validate('password', password);
+                }
+            }
+        }
+
     }
 }
 

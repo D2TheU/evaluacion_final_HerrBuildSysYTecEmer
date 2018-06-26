@@ -1,5 +1,4 @@
 .login-container {
-    /* margin-top: 16rem; */
     color: white;
     text-align: center;
 }
@@ -11,5 +10,10 @@
     padding: 0.15rem 0.75rem;
     color: #d30000;
     font-weight: 600;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
+}
+.login-container {
+    background: url(../img/login-fondo.jpg) no-repeat top;
+    -webkit-background-size: cover;
+    background-size: cover;
 }
