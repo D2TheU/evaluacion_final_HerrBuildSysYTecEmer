@@ -12,7 +12,53 @@ class Dashboard extends React.Component {
         super()
         this.createCatalog = this.createCatalog.bind(this);
         this.state = {
+            products: {
+                'aguacate': {
+                    'name': 'Aguacate',
+                    'file': 'aguacate.jpg',
+                    'price': 5,
+                    'quantity': 46,
+                    'count' : 1
+                },
+                'ajo': {
+                    'name': 'Ajo',
+                    'file': 'ajo.jpg',
+                    'price': 2,
+                    'quantity': 78,
+                    'count' : 1
+                },
+                'almendras': {
+                    'name': 'Almendras',
+                    'file': 'almendras.jpg',
+                    'price': 8,
+                    'quantity': 29,
+                    'count' : 1
+                },
+                'arándanos': {
+                    'name': 'Arándanos',
+                    'file': 'arandanos.jpg',
+                    'price': 6,
+                    'quantity': 39,
+                    'count' : 1
+                },
+                'brócoli': {
+                    'name': 'Brócoli',
+                    'file': 'brocoli.png',
+                    'price': 10,
+                    'quantity': 87,
+                    'count' : 1
+                }
+            }
+        }
+    }
 
+    onAddChange(e) {
+        let value = e.target.value;
+        if (value > 0) {
+            let product = e.target.id.substr(6);
+            let products = Object.assign({}, this.state.products);    //creating copy of object
+            products[product].count = value;                        //updating value
+            this.setState({products});
         }
     }
 
@@ -50,64 +96,38 @@ class Dashboard extends React.Component {
     }
 
     createCatalog() {
-        var products = [
-            {
-                'name': 'Aguacates',
-                'file': 'aguacate.jpg',
-                'price': 5,
-                'cuantity': 46
-            },
-            {
-                'name': 'Ajo',
-                'file': 'ajo.jpg',
-                'price': 2,
-                'cuantity': 78
-            },
-            {
-                'name': 'Almendras',
-                'file': 'almendras.jpg',
-                'price': 8,
-                'cuantity': 29
-            },
-            {
-                'name': 'Arándanos',
-                'file': 'arandanos.jpg',
-                'price': 6,
-                'cuantity': 39
-            },
-            {
-                'name': 'Brócoli',
-                'file': 'brocoli.png',
-                'price': 10,
-                'cuantity': 87
-            }
-        ];
-        let rows = Math.ceil(products.length/4);
         let catalog = [];
-        for (var i = 0; i < rows; i++) {
-            var htmlProducts = [];
-            for (var j = 0; j < 4; j++) {
-                if (products[(3*i)+j] !== undefined) {
-                    htmlProducts.push(
-                        <div className="card col-md-3" key={'card-' + ((3*i)+j)}>
-                            <img className="card-img-top" src={'/assets/img/' + products[(3*i)+j].file} alt="Card image cap" />
-                            <div className="card-body no-padding-sides">
-                                <h5 className="card-title">{products[(3*i)+j].name}</h5>
-                                <p className="card-text"><strong>Precio: </strong>${products[(3*i)+j].price}</p>
-                                <p className="card-text"><strong>Unidades disponibles: </strong>{products[(3*i)+j].cuantity}</p>
-                                <a href="#" className="btn btn-primary">Ver más</a>
+        let row = [];
+        for(var product in this.state.products){
+            row.push(
+                <div className="card col-md-3" key={'card-' + product}>
+                    <img className="card-img-top" src={'/assets/img/' + this.state.products[product].file} alt="Card image cap" />
+                    <div className="card-body no-padding-sides">
+                        <h5 className="card-title">{this.state.products[product].name}</h5>
+                        <p className="card-text"><strong>Precio: </strong>${this.state.products[product].price}</p>
+                        <p className="card-text"><strong>Unidades disponibles: </strong>{this.state.products[product].quantity}</p>
+                        <div className="row no-margin-sides card-bottom">
+                            <div className="col-sm-5 col-md-12 col-lg-5 no-padding-sides">
+                                <button className="btn btn-primary">Ver más</button>
+                            </div>
+                            <div className="col-sm-7 col-md-12 col-lg-7 no-padding-sides">
+                                <div className="input-group">
+                                    <div className="input-group-prepend">
+                                        <button className="btn btn-outline-secondary" type="button" id={"count_" + this.state.products[product].name.toLowerCase()}>Añadir</button>
+                                    </div>
+                                    <input type="number" className="form-control" id={"input_" + this.state.products[product].name.toLowerCase()} value={this.state.products[product].count} onChange={e => this.onAddChange(e)}/>
+                                </div>
                             </div>
                         </div>
-                    )
-                } else {
-                    continue;
-                }
+                    </div>
+                </div>
+            )
+            if (row.length % 4 == 0) {
+                catalog.push(
+                    <div className="row no-margin-sides" key={row.length}>{row}</div>
+                );
             }
-            catalog.push(
-                <div className="row no-margin-sides" key={i}>{htmlProducts}</div>
-            );
         }
-
         return catalog;
     }
 }

@@ -45,14 +45,44 @@
     margin-left: 0.4%;
     margin-right: 0.8%;
 }
+.card {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.card p {
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+    font-size: 0.9rem;
+}
+.card .card-body {
+    padding-bottom: 0;
+    padding-top: 1rem;
+}
 .card-img-top {
     height: 10rem;
     object-fit: cover;
+}
+.card-bottom>div{
+    margin-bottom: 1rem;
+}
+.card-body button, .card-body input {
+    font-size: 0.8rem;
+}
+.card-body input {
+    padding-left: 0.8rem;
+    padding-right: 0;
+}
+input:focus, button[class*=btn]:focus, .form-control:focus {
+    box-shadow: none;
+    border-color: rgb(206, 212, 218);
 }
 @media screen and (max-width: 768px) {
     .catalog-content>.row>.card {
         margin-left: 0;
         margin-right: 0;
         max-width: 100%;
+    }
+    .card-img-top {
+        height: 20rem;
     }
 }
