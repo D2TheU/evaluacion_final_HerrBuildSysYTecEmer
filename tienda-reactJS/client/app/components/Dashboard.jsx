@@ -12,6 +12,7 @@ class Dashboard extends React.Component {
         super()
         this.createCatalog = this.createCatalog.bind(this);
         this.state = {
+            filter: '',
             products: {
                 'aguacate': {
                     'name': 'Aguacate',
@@ -64,7 +65,6 @@ class Dashboard extends React.Component {
 
     render() {
         return (
-
             <div className="container-fluid fill-height dashboard-container">
                 <div className="container">
                     <Navbar />
@@ -98,7 +98,11 @@ class Dashboard extends React.Component {
     createCatalog() {
         let catalog = [];
         let row = [];
+
         for(var product in this.state.products){
+            if (this.state.filter != '' && product.indexOf(this.state.filter) == -1) {
+                continue;
+            }
             row.push(
                 <div className="card col-md-3" key={'card-' + product}>
                     <img className="card-img-top" src={'/assets/img/' + this.state.products[product].file} alt="Card image cap" />
@@ -121,12 +125,17 @@ class Dashboard extends React.Component {
                         </div>
                     </div>
                 </div>
-            )
+            );
             if (row.length % 4 == 0) {
                 catalog.push(
                     <div className="row no-margin-sides" key={row.length}>{row}</div>
                 );
             }
+        }
+        if (catalog == '') {
+            catalog.push(
+                <div className="row no-margin-sides" key={row.length}>{row}</div>
+            );
         }
         return catalog;
     }
