@@ -18,6 +18,19 @@ a {
 a:hover {
     color: white;
 }
+.card {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.card p {
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+    font-size: 0.8rem;
+}
+.card .card-body {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
 div.container-fluid {
     height: 100%;
 }
