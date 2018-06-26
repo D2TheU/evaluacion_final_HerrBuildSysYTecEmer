@@ -1,0 +1,20 @@
+.navbar {
+    border-radius: 0.25rem;
+    padding: 1rem;
+}
+.navbar a {
+    color: rgba(0,0,0,.5);
+}
+.navbar a:hover {
+    color: rgba(0,0,0,.7);
+    text-decoration: none;
+}
+.nav-item img {
+    height: 1.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    opacity: 0.5;
+}
+.nav-item img:hover {
+    opacity: 0.7;
+}

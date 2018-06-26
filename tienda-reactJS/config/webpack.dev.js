@@ -42,6 +42,23 @@ var config = {
                     'url-loader?limit=10000',
                     'img-loader'
                 ]
+            },
+            {
+                test: /\.svg$/,
+                use: [
+                    "babel-loader",
+                    {
+                        loader: "react-svg-loader",
+                        options: {
+                            svgo: {
+                                plugins: [{
+                                    removeTitle: false
+                                }],
+                                floatPrecision: 2
+                            }
+                        }
+                    }
+                ]
             }
         ],
     },
