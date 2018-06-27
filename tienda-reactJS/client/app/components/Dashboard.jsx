@@ -12,6 +12,7 @@ class Dashboard extends React.Component {
         super()
         this.createCatalog = this.createCatalog.bind(this);
         this.state = {
+            mounted: false,
             filter: '',
             products: {}
         }
@@ -59,28 +60,36 @@ class Dashboard extends React.Component {
         )
     }
 
+    componentWillMount() {
+        this.state.mounted = true
+    }
+
     componentDidMount(){
-        request.get('/api/products')
-            .set({
-                'API-Key': 'LndkOnelk2232nl23k',
-                'Content-Type': 'application/json'
-            })
-            .end((err, res) => {
-                if (err) {
-                    alert(err);
-                } else {
-                    this.state = {
-                        products: res.body
+        request.get('/api/products').set({
+            'API-Key': 'LndkOnelk2232nl23k',
+            'Content-Type': 'application/json'
+        }).end((err, res) => {
+            if (err) {
+                alert(err);
+            } else {
+                var products = res.body;
+                if (this.state.mounted) {
+                    if (this.state.products != products) {
+                        this.setState({products: products});
                     }
                 }
-            });
+            }
+        });
+    }
+
+    componentWillUnmount () {
+        this.state.mounted = false
     }
 
     createCatalog() {
         let catalog = [];
-        let row = [];
-
-        for(var product in this.state.products){
+        var row = [];
+        for(var product in this.state.products) {
             if (this.state.filter != '' && product.indexOf(this.state.filter) == -1) {
                 continue;
             }
@@ -107,18 +116,27 @@ class Dashboard extends React.Component {
                     </div>
                 </div>
             );
-            if (row.length % 4 == 0) {
+            if (row.length == 4) {
                 catalog.push(
-                    <div className="row no-margin-sides" key={row.length}>{row}</div>
+                    <div className="row no-margin-sides" key={'row_' + (catalog.length + row.length)}>{row}</div>
                 );
+                row = [];
             }
         }
-        if (catalog == '') {
+        if (row.length < 4) {
             catalog.push(
-                <div className="row no-margin-sides" key={row.length}>{row}</div>
+                <div className="row no-margin-sides" key={'row_' + row.length}>{row}</div>
             );
         }
         return catalog;
+    }
+
+    isEmpty(obj) {
+        for(var prop in obj) {
+            if(obj.hasOwnProperty(prop))
+                return false;
+        }
+        return JSON.stringify(obj) === JSON.stringify({});
     }
 
     removeDiacritics (str) {
