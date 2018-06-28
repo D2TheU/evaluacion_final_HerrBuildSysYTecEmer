@@ -114,16 +114,26 @@ input:focus, button[class*=btn]:focus, .form-control:focus {
         font-size: 1.25rem;
     }
     .top-content {
-        margin-top: 0rem;
+        margin-top: 0.5rem;
         padding: 1rem 1rem 0;
     }
     p {
         margin-bottom: 0.5rem;
     }
+    hr {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
     .card {
-        padding-left: 0.2rem;
-        padding-right: 0.2rem;
-        padding-top: 0.2rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        padding-top: 0.5rem;
+    }
+    .card-bottom>div {
+        margin-bottom: 0.5rem;
+    }
+    .catalog-content {
+        max-height: calc(100vh - 57px - 10rem);
     }
     .catalog-content>.row>.card {
         margin-left: 0;
