@@ -1,15 +1,6 @@
 const User = require('../../models/User.js');
 
 module.exports = (app) => {
-    app.get('/api/users', function(req, res) {
-        User.find({}).exec(function(err, docs) {
-            if (err) {
-                res.status(500);
-                res.json(err);
-            }
-            res.json(docs);
-        });
-    });
     app.post('/api/login', function(req, res) {
         let email = req.body.email
         let password = req.body.password
@@ -24,9 +15,13 @@ module.exports = (app) => {
                 res.json(err)
             }
             if (!user) {
-                res.json({result: 'failed'});
+                res.json({
+                    result: 'failed'
+                });
             } else {
-                res.json({result: 'login'});
+                res.json({
+                    result: 'login'
+                });
             }
             // res.json(user)
         });
