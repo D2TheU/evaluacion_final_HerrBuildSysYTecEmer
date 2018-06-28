@@ -50,15 +50,27 @@ div.container-fluid {
     /* These two lines are counted as one :-)       */
     display: flex;
 }
-.btn-outline-secondary {
+.btn-secondary {
     color: #fff;
     background-color: #f9b85d;
     background-image: none;
     border-color: #f9b85d;
 }
-.btn-outline-secondary:hover {
+.btn-secondary:hover {
     color: #fff;
     background-color: #f6a333;
     background-image: none;
     border-color: #dd9733;
+}
+.btn-outline-secondary {
+    color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0,0);
+    background-image: none;
+    border-color: rgba(0, 0, 0, 0.125);
+}
+.btn-outline-secondary:hover {
+    color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0,0.125);
+    background-image: none;
+    border-color: rgba(0, 0, 0, 0.2);
 }

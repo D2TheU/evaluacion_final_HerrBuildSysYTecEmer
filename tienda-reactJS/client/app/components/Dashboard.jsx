@@ -14,7 +14,9 @@ class Dashboard extends React.Component {
         this.state = {
             mounted: false,
             filter: '',
-            products: {}
+            products: {},
+            details: false,
+            detailProduct: {}
         }
     }
 
@@ -28,36 +30,93 @@ class Dashboard extends React.Component {
         }
     }
 
+    onSearchChange(e) {
+        this.setState({filter: this.removeDiacritics(e.target.value)});
+    }
+
+    showDetails(e) {
+        var product = e.target.id.substr(8);
+        this.setState({
+            details: true,
+            detailProduct: this.state.products[product]
+        });
+    }
+
+    hideDetails(e) {
+        var product = e.target.id.substr(8);
+        this.setState({
+            details: false,
+            detailProduct: {}
+        });
+    }
+
     render() {
-        return (
-            <div className="container-fluid fill-height dashboard-container">
-                <div className="container">
-                    <Navbar />
-                    <div className="row no-margin-sides product-container">
-                        <div className="col-12 top-content">
-                            <div className="row">
-                                <div className="col-md-9 title-container">
-                                    <h1>Catálogo de productos</h1>
-                                </div>
-                                <div className="col-md-3 search-container">
-                                    <p>¿Qué estás buscando?</p>
-                                    <div className="input-group">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text" id="search_addon"><img src="/assets/img/ic_search.svg"/></span>
-                                        </div>
-                                        <input type="text" className="form-control" id="search"/>
+        if (this.state.details) {
+            console.log(this.state.detailProduct);
+            return (
+                <div className="container-fluid fill-height dashboard-container">
+                    <div className="container">
+                        <Navbar/>
+                        <div className="row no-margin-sides">
+                            <div className="col-12 top-content">
+                                <div className="row">
+                                    <div className="col-md-9 title-container">
+                                        <h1>{this.state.detailProduct.name}</h1>
                                     </div>
                                 </div>
+                                <hr/>
                             </div>
-                            <hr />
                         </div>
-                        <div className="col-12 catalog-content">
-                            {this.createCatalog()}
+                        <div className="row no-margin-sides">
+                            <div className="col-12 details-content">
+                                <div className="row no-margin-sides">
+                                    <div className="card col-md-5" id="card-details">
+                                        <img className="card-img-detail" src={'/assets/img/' + this.state.detailProduct.file} alt="Card image cap"/>
+                                    </div>
+                                    <div className="col-md-5" id="info-details">
+                                        <p className="card-text"><strong>Precio: </strong>${this.state.detailProduct.price}</p>
+                                        <p className="card-text"><strong>Unidades disponibles: </strong>{this.state.detailProduct.quantity}</p>
+                                    </div>
+                                </div>
+                                <button className="btn btn-outline-secondary" id="showCatalog" onClick={e => this.hideDetails(e)}>Atrás</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        } else {
+            return (
+                <div className="container-fluid fill-height dashboard-container">
+                    <div className="container">
+                        <Navbar/>
+                        <div className="row no-margin-sides">
+                            <div className="col-12 top-content">
+                                <div className="row">
+                                    <div className="col-md-9 title-container">
+                                        <h1>Catálogo de productos</h1>
+                                    </div>
+                                    <div className="col-md-3 search-container">
+                                        <p>¿Qué estás buscando?</p>
+                                        <div className="input-group">
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text" id="search_addon"><img src="/assets/img/ic_search.svg"/></span>
+                                            </div>
+                                            <input type="text" className="form-control" id="search" value={this.state.filter} onChange={e => this.onSearchChange(e)}/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>
+                            </div>
+                        </div>
+                        <div className="row no-margin-sides">
+                            <div className="col-12 catalog-content">
+                                {this.createCatalog()}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
     }
 
     componentWillMount() {
@@ -95,19 +154,19 @@ class Dashboard extends React.Component {
             }
             row.push(
                 <div className="card col-md-3" key={'card-' + this.removeDiacritics(product)}>
-                    <img className="card-img-top" src={'/assets/img/' + this.state.products[product].file} alt="Card image cap" />
+                    <img className="card-img-top" src={'/assets/img/' + this.state.products[product].file} alt="Card image cap"/>
                     <div className="card-body no-padding-sides">
                         <h5 className="card-title">{this.state.products[product].name}</h5>
                         <p className="card-text"><strong>Precio: </strong>${this.state.products[product].price}</p>
                         <p className="card-text"><strong>Unidades disponibles: </strong>{this.state.products[product].quantity}</p>
                         <div className="row no-margin-sides card-bottom">
                             <div className="col-sm-5 col-md-12 col-lg-5 no-padding-sides">
-                                <button className="btn btn-primary">Ver más</button>
+                                <button className="btn btn-primary" id={"details_" + this.removeDiacritics(this.state.products[product].name.toLowerCase())} onClick={e => this.showDetails(e)}>Ver más</button>
                             </div>
                             <div className="col-sm-7 col-md-12 col-lg-7 no-padding-sides">
                                 <div className="input-group">
                                     <div className="input-group-prepend">
-                                        <button className="btn btn-outline-secondary" type="button" id={"count_" + this.removeDiacritics(this.state.products[product].name.toLowerCase())}>Añadir</button>
+                                        <button className="btn btn-secondary" type="button" id={"count_" + this.removeDiacritics(this.state.products[product].name.toLowerCase())}>Añadir</button>
                                     </div>
                                     <input type="number" className="form-control" id={"input_" + this.removeDiacritics(this.state.products[product].name.toLowerCase())} value={this.state.products[product].count} onChange={e => this.onAddChange(e)}/>
                                 </div>
