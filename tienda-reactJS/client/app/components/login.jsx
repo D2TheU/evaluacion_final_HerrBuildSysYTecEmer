@@ -62,6 +62,16 @@ class Login extends React.Component {
         return re.test(String(email).toLowerCase());
     }
 
+    loginKeyPress(e) {
+        if(e.key == 'Enter'){
+            if (e.target.id == 'password') {
+                this.login();
+            } else {
+                document.getElementById('password').focus();
+            }
+        }
+    }
+
     render() {
         return (
             <div className="container-fluid login-container">
@@ -71,12 +81,12 @@ class Login extends React.Component {
                         <form id="login-form">
                             <div className="form-group">
                                 <label htmlFor="email">Correo electrónico</label>
-                                <input type="email" className={'form-control' + this.state.emailError} id="email" value={this.state.email} onChange={e => this.onChange(e)} required/>
+                                <input type="email" className={'form-control' + this.state.emailError} id="email" value={this.state.email} onChange={e => this.onChange(e)} onKeyPress={e => this.loginKeyPress(e)} required/>
                                 <div className="invalid-feedback">{this.state.emailErrorMsg}</div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="password">Contraseña</label>
-                                <input type="password" className={'form-control' + this.state.passwordError} id="password" value={this.state.password} onChange={e => this.onChange(e)} required/>
+                                <input type="password" className={'form-control' + this.state.passwordError} id="password" value={this.state.password} onChange={e => this.onChange(e)} onKeyPress={e => this.loginKeyPress(e)} required/>
                                 <div className="invalid-feedback">{this.state.passwordErrorMsg}</div>
                             </div>
                             <button type="button" onClick={this.login} className="btn btn-success">Ingresar</button>
