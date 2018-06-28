@@ -10,6 +10,15 @@
     color: rgba(0,0,0,.7);
     text-decoration: none;
 }
+.navbar a[href*=cart] {
+    position: relative;
+}
+.nav-item span.badge {
+    position: absolute;
+    z-index: 5000;
+    right: 0;
+    bottom: -9px;
+}
 .nav-item img {
     height: 1.5rem;
     margin-left: 0.5rem;
