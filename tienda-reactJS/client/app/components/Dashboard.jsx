@@ -6,12 +6,12 @@ import style from '../assets/css/dashboard.css';
 
 import Navbar from './Navbar.jsx';
 
-import { removeSpecialChr } from './helpers/helpers.jsx'
+import { removeSpecialChr, orderObject } from './helpers/helpers.jsx'
 
 class Dashboard extends React.Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.createCatalog = this.createCatalog.bind(this);
         this.state = {
             mounted: false,
@@ -19,7 +19,7 @@ class Dashboard extends React.Component {
             products: {},
             details: false,
             detailProduct: {},
-            shoppingCart: {}
+            shoppingCart: this.props.location.state !== undefined ? orderObject(this.props.location.state.shoppingCart) : {}
         }
     }
 

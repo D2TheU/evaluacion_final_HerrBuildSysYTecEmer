@@ -27,14 +27,13 @@ class Navbar extends React.Component {
                 <Link to="/dashboard">La Bodega</Link>
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
-                        <Link to="/dashboard"><img src="/assets/img/ic_dashboard.svg"/></Link>
+                        <Link to={{ pathname: '/dashboard', state: { shoppingCart: this.props.shoppingCart }}}><img src="/assets/img/ic_dashboard.svg"/></Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/cart"><img src="/assets/img/ic_shopping.svg"/>{badge}</Link>
-
+                        <Link to={{ pathname: '/cart', state: { shoppingCart: this.props.shoppingCart }}}><img src="/assets/img/ic_shopping.svg"/>{badge}</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/dashboard"><img src="/assets/img/ic_inbox.svg"/></Link>
+                        <Link to={{ pathname: '/dashboard', state: { shoppingCart: this.props.shoppingCart }}}><img src="/assets/img/ic_inbox.svg"/></Link>
                     </li>
                     <li className="nav-item">
                         <Link to="/"><img src="/assets/img/ic_logout.svg"/></Link>

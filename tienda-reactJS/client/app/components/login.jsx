@@ -101,31 +101,27 @@ class Login extends React.Component {
         var email = document.getElementById('email').value.trim();
         var password = document.getElementById('password').value;
         if (email != '' && password != '') {
-            request.post('/api/login')
-                .set({
-                    'API-Key': 'LndkOnelk2232nl23k',
-                    'Content-Type': 'application/json'
-                })
-                .send({
-                    email: email,
-                    password: password
-                })
-                .end((err, res) => {
-                    if (err) {
-                        alert(err);
+            request.post('/api/login').set({
+                'API-Key': 'LndkOnelk2232nl23k',
+                'Content-Type': 'application/json'
+            }).send({
+                email: email,
+                password: password
+            }).end((err, res) => {
+                if (err) {
+                    alert(err);
+                } else {
+                    if (res.body.result == 'login') {
+                        this.props.history.push('/dashboard');
                     } else {
-                        if (res.body.result == 'login') {
-                            this.props.history.push('/dashboard');
-                        } else {
-                            this.setState({
-                                password: '',
-                                passwordError: ' is-invalid',
-                                passwordErrorMsg: 'Contraseña incorrecta.'
-                            });
-                        }
+                        this.setState({
+                            password: '',
+                            passwordError: ' is-invalid',
+                            passwordErrorMsg: 'Contraseña incorrecta.'
+                        });
                     }
-                });
-
+                }
+            });
         } else {
             if (email == '') {
                 this.setState({
