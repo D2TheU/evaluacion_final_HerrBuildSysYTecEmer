@@ -81,7 +81,7 @@ input:focus, button[class*=btn]:focus, .form-control:focus {
 #showCatalog {
     margin-bottom: 1rem;
 }
-.details-content {
+.details-content, .cart-content {
     background-color: #f8f9fa;
     border-bottom-left-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
