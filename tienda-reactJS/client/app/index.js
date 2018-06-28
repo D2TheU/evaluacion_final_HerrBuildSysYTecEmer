@@ -8,6 +8,7 @@ import NotFound from './components/App/NotFound.jsx';
 
 import Login from './components/Login.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import ShoppingCart from './components/ShoppingCart.jsx';
 
 render((
   <Router>
@@ -16,6 +17,7 @@ render((
         <Route exact path="/" component={Login}/>
         <Route exact path="/login" component={Login}/>
         <Route exact path="/dashboard" component={Dashboard}/>
+        <Route exact path="/cart" component={ShoppingCart}/>
         <Route component={NotFound}/>
       </Switch>
     </App>
