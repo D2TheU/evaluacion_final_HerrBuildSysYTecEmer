@@ -6,7 +6,7 @@ import style from '../assets/css/cart.css';
 
 import Navbar from './Navbar.jsx';
 
-import { orderObject } from './helpers/helpers.jsx'
+import { orderObject, isObjectEmpty } from './helpers/helpers.jsx'
 
 class ShoppingCart extends React.Component {
 
@@ -70,7 +70,16 @@ class ShoppingCart extends React.Component {
             if (err) {
                 alert(err);
             } else {
-                console.log(res.body);
+                if (res.body.result == 'ok') {
+                    this.setState({
+                        shoppingCart: {}
+                    });
+                    alert('¡Gracias por comprar con nosotros!');
+                } else if (res.body.result == 'empty') {
+                    alert('El carrito está vacío.');
+                } else {
+                    alert('¡Error! Favor de intentar más tarde');
+                }
             }
         });
     }
@@ -104,6 +113,15 @@ class ShoppingCart extends React.Component {
             )
             total += this.state.shoppingCart[item].count*this.state.shoppingCart[item].price;
         }
+        var checkoutGroup = '';
+        if (!isObjectEmpty(this.state.shoppingCart)) {
+            checkoutGroup = (
+                <div className="btn-group" role="group" aria-label="Basic example">
+                    <button className="btn btn-outline-secondary" id="showCatalog" onClick={this.cancel}>Cancelar</button>
+                    <button className="btn btn-outline-secondary" id="showCatalog" onClick={this.pay}>Pagar</button>
+                </div>
+            );
+        }
         shoppingCart.push (
                 <div className="row no-margin-sides" key="cart_container">
                     <div className="col-12 cart-content">
@@ -113,10 +131,7 @@ class ShoppingCart extends React.Component {
                             </div>
                             <div className="col-md-6 order-first order-md-last" id="info-details">
                                 <h3>Total: {total}</h3>
-                                <div className="btn-group" role="group" aria-label="Basic example">
-                                    <button className="btn btn-outline-secondary" id="showCatalog" onClick={this.cancel}>Cancelar</button>
-                                    <button className="btn btn-outline-secondary" id="showCatalog" onClick={this.pay}>Pagar</button>
-                                </div>
+                                {checkoutGroup}
                             </div>
                         </div>
                     </div>

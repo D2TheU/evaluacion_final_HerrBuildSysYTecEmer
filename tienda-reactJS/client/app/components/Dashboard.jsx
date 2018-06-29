@@ -24,10 +24,13 @@ class Dashboard extends React.Component {
     }
 
     onAddChange(e) {
+        // Get value of input
         let value = e.target.value;
-        if (value > 0) {
-            // Get product name
-            let product = e.target.id.substr(6);
+        // Get product name
+        let product = e.target.id.substr(6);
+        // Get mas value of product
+        let maxValue = this.state.products[product].quantity;
+        if (0 < value && value <= maxValue ) {
             // Creating copy of object
             let products = Object.assign({}, this.state.products);
             // Updating value
@@ -60,17 +63,29 @@ class Dashboard extends React.Component {
     addToCart(e) {
         // Get product name
         let product = e.target.id.substr(6);
-        // Creating copy of object
-        let shoppingCart = Object.assign({}, this.state.shoppingCart);
-        let productObj = Object.assign({}, this.state.products[product]);
-        // Updating value
-        if (shoppingCart[product] === undefined) {
-            shoppingCart[product] = productObj;
-        } else {
-            shoppingCart[product].count += productObj.count;
+        if (this.state.products[product].quantity > 0) {
+            // Creating copy of object
+            let shoppingCart = Object.assign({}, this.state.shoppingCart);
+            let productObj = Object.assign({}, this.state.products[product]);
+            // Updating value
+            if (shoppingCart[product] === undefined) {
+                shoppingCart[product] = productObj;
+            } else {
+                shoppingCart[product].count += productObj.count;
+            }
+            // setState of all shoppingCart
+            this.setState({shoppingCart});
+            // Creating copy of object
+            let products = Object.assign({}, this.state.products);
+            // Updating value
+            products[product].quantity = products[product].quantity - products[product].count;
+
+            if (products[product].quantity < products[product].count) {
+                products[product].count = products[product].quantity;
+            }
+            // setState of all products
+            this.setState({products});
         }
-        // setState of all shoppingCart
-        this.setState({shoppingCart});
     }
 
     render() {
@@ -166,9 +181,12 @@ class Dashboard extends React.Component {
             } else {
                 var products = res.body;
                 if (this.state.mounted) {
-                    if (this.state.products != products) {
-                        this.setState({products: products});
+                    for (var product in products) {
+                        if (this.state.shoppingCart.hasOwnProperty(product)) {
+                            products[product].quantity = products[product].quantity - this.state.shoppingCart[product].count;
+                        }
                     }
+                    this.setState({products: products});
                 }
             }
         });
@@ -189,6 +207,17 @@ class Dashboard extends React.Component {
                 continue;
             }
             // Push product view to row with current product's information
+            var inputGroup = '';
+            if (this.state.products[product].quantity > 0) {
+                inputGroup = (
+                    <div className="input-group">
+                        <div className="input-group-prepend">
+                            <button className="btn btn-secondary" type="button" id={"count_" + removeSpecialChr(this.state.products[product].name.toLowerCase())} onClick={e => this.addToCart(e)}>Añadir</button>
+                        </div>
+                        <input type="number" className="form-control" id={"input_" + removeSpecialChr(this.state.products[product].name.toLowerCase())} value={this.state.products[product].count} onChange={e => this.onAddChange(e)}/>
+                    </div>
+                );
+            }
             row.push(
                 <div className="card col-md-3" key={'card-' + removeSpecialChr(product)}>
                     <img className="card-img-top" src={'/assets/img/' + this.state.products[product].file} alt="Card image cap"/>
@@ -201,12 +230,7 @@ class Dashboard extends React.Component {
                                 <button className="btn btn-primary" id={"details_" + removeSpecialChr(this.state.products[product].name.toLowerCase())} onClick={e => this.showDetails(e)}>Ver más</button>
                             </div>
                             <div className="col-7 col-md-12 col-lg-7 no-padding-sides">
-                                <div className="input-group">
-                                    <div className="input-group-prepend">
-                                        <button className="btn btn-secondary" type="button" id={"count_" + removeSpecialChr(this.state.products[product].name.toLowerCase())} onClick={e => this.addToCart(e)}>Añadir</button>
-                                    </div>
-                                    <input type="number" className="form-control" id={"input_" + removeSpecialChr(this.state.products[product].name.toLowerCase())} value={this.state.products[product].count} onChange={e => this.onAddChange(e)}/>
-                                </div>
+                                {inputGroup}
                             </div>
                         </div>
                     </div>
