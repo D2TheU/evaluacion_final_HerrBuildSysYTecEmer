@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { HelperService } from '../services/helpers.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  showBadge = false;
+  badgeCount = 0;
+  @Input() shoppingCart: Object;
+
+  constructor(private helper: HelperService) { }
 
   ngOnInit() {
+    if (this.helper.objectLength(this.shoppingCart) > 0) {
+        this.showBadge = true;
+        this.badgeCount = this.helper.objectLength(this.shoppingCart);
+    }
   }
 
 }

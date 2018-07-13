@@ -1,3 +1,17 @@
-<p>
-  navbar works!
-</p>
+<div class="navbar sticky-top navbar-light bg-light navbar-expand">
+  <a routerLink="/dashboard">La Bodega</a>
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      <a routerLink="/dashboard"><img src="/img/ic_dashboard.svg"/></a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/cart"><img src="/img/ic_shopping.svg"/><span *ngIf="showBadge" class="badge badge-pill badge-danger">{{badgeCount}}</span></a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/dashboard"><img src="/img/ic_inbox.svg"/></a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/login"><img src="/img/ic_logout.svg"/></a>
+    </li>
+  </ul>
+</div>
