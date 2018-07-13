@@ -12,6 +12,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HttpService } from './services/http.service';
 
 import { L3RoutingModule } from './app-routing.module';
+import { KeyvaluePipe } from './keyvalue.pipe';
+import { NoSpecialChrPipe } from './no-special-chr.pipe';
+import { FilterProductPipe } from './filter-product.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { L3RoutingModule } from './app-routing.module';
     LoginComponent,
     DashboardComponent,
     CartComponent,
-    NavbarComponent
+    NavbarComponent,
+    KeyvaluePipe,
+    NoSpecialChrPipe,
+    FilterProductPipe
   ],
   imports: [
     BrowserModule,
