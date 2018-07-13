@@ -1,3 +1,52 @@
-<p>
-  dashboard works!
-</p>
+<div class="container-fluid fill-height dashboard-container">
+  <div class="container no-padding-sides">
+    <app-navbar [shoppingCart]="shoppingCart"></app-navbar>
+    <div class="row no-margin-sides">
+      <div class="col-12 top-content">
+        <div class="row">
+          <div class="col-md-9 title-container">
+            <h1 *ngIf='!details'>Catálogo de productos</h1>
+            <h1 *ngIf='details'>{{detailProduct.name}}</h1>
+          </div>
+          <div class="col-md-3 search-container" *ngIf='!details'>
+            <p>¿Qué estás buscando?</p>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="search_addon"><img src="/img/ic_search.svg"/></span>
+              </div>
+              <input type="text" class="form-control" id="search" value="{{filter}}" (input)="onFilter($event.target.value)" />
+            </div>
+          </div>
+        </div>
+        <hr/>
+      </div>
+    </div>
+    <div class="row no-margin-sides">
+      <div class="col-12 catalog-content">
+        <div class="row no-margin-sides" *ngFor="let row of products | filterProduct: filter">
+          <div class="card col-md-3" *ngFor="let product of row | keyvalue">
+            <img class="card-img-top" src="img/{{row[product].file}}" alt="Card image cap" />
+            <div class="card-body no-padding-sides">
+              <h5 class="card-title">{{row[product].name}}</h5>
+              <p class="card-text"><strong>Precio: </strong>${{row[product].price}}</p>
+              <p class="card-text"><strong>Unidades disponibles: </strong>{{row[product].quantity}}</p>
+              <div class="row no-margin-sides card-bottom">
+                <div class="col-5 col-md-12 col-lg-5 no-padding-sides">
+                  <button class="btn btn-primary" id="details_{{row[product].name | lowercase | noSpecialChr}}">Ver más</button>
+                </div>
+                <div class="col-7 col-md-12 col-lg-7 no-padding-sides">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <button class="btn btn-secondary" type="button" id="count_{{row[product].name | lowercase | noSpecialChr}}">Añadir</button>
+                    </div>
+                    <input type="number" class="form-control" id="input_{{row[product].name | lowercase | noSpecialChr}}" value="{{row[product].count}}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
