@@ -9,6 +9,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CartComponent } from './cart/cart.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
+import { HttpService } from './services/http.service';
+
 import { L3RoutingModule } from './app-routing.module';
 
 @NgModule({
@@ -25,7 +27,7 @@ import { L3RoutingModule } from './app-routing.module';
     HttpModule,
     L3RoutingModule
   ],
-  providers: [],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

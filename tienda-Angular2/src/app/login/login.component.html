@@ -5,15 +5,15 @@
       <form id="login-form">
         <div class="form-group">
           <label htmlFor="email">Correo electrónico</label>
-          <input type="email" class="form-control" id="email" required/>
-          <div class="invalid-feedback">Error en email</div>
+          <input type="email" class="form-control {{emailError}}" value="{{emailValue}}" (input)="onChange($event.target)" (keypress)="loginKeyPress($event)" id="email" required #email/>
+          <div class="invalid-feedback">{{emailErrorMsg}}</div>
         </div>
         <div class="form-group">
           <label htmlFor="password">Contraseña</label>
-          <input type="password" class="form-control" id="password" required/>
-          <div class="invalid-feedback">Error en password</div>
+          <input type="password" class="form-control {{passwordError}}" value="{{passwordValue}}" (input)="onChange($event.target)" (keypress)="loginKeyPress($event)" id="password" required #password/>
+          <div class="invalid-feedback">{{passwordErrorMsg}}</div>
         </div>
-        <button type="button" class="btn btn-success">Ingresar</button>
+        <button type="button" class="btn btn-success" (click)="login(email.value, password.value)">Ingresar</button>
       </form>
     </div>
   </div>
