@@ -22,20 +22,14 @@ class ShoppingCart extends React.Component {
 
     render() {
         let topContainer = [];
-        let topContainerContent = [];
-        topContainerContent.push(
-            <div className="col-md-9 title-container" key="details_title">
-                <h1>Carrito de compras</h1>
-            </div>
-        )
-        // Add details body to container
-
-        // Wrap topContainerContent and add to topContainer, create shoppingCart and wrap it as well.
+        // Add template to topContainer.
         topContainer.push(
             <div className="row no-margin-sides" key="top_container">
                 <div className="col-12 top-content">
                     <div className="row">
-                        {topContainerContent}
+                        <div className="col-md-9 title-container">
+                            <h1>Carrito de compras</h1>
+                        </div>
                     </div>
                     <hr/>
                 </div>
