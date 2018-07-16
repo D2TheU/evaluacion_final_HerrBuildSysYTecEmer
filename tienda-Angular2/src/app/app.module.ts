@@ -10,6 +10,7 @@ import { CartComponent } from './cart/cart.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
 import { HttpService } from './services/http.service';
+import { HelperService } from './services/helper.service';
 
 import { L3RoutingModule } from './app-routing.module';
 import { KeyvaluePipe } from './keyvalue.pipe';
@@ -33,7 +34,7 @@ import { FilterProductPipe } from './filter-product.pipe';
     HttpModule,
     L3RoutingModule
   ],
-  providers: [HttpService],
+  providers: [HttpService, HelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

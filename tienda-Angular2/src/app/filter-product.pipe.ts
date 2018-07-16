@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterProductPipe implements PipeTransform {
 
   transform(items: any, args?: any): any {
-    console.log(args);
     let productArray = [];
     let filteredArray = [];
 
@@ -21,7 +20,6 @@ export class FilterProductPipe implements PipeTransform {
     for (let index in productArray) {
       for (var product in productArray[index]) {
         if (args == '' || product.indexOf(args) != -1) {
-          console.log(product);
           obj[product] = productArray[index][product];
           objCount++;
           if (objCount == 4) {
@@ -35,7 +33,6 @@ export class FilterProductPipe implements PipeTransform {
          }
       }
     }
-    console.log(filteredArray);
 
     return filteredArray;
   }
