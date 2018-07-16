@@ -34,12 +34,12 @@
                 <div class="col-5 col-md-12 col-lg-5 no-padding-sides">
                   <button class="btn btn-primary" id="details_{{row[product].name | lowercase | noSpecialChr}}" (click)="showDetails($event.target)">Ver más</button>
                 </div>
-                <div class="col-7 col-md-12 col-lg-7 no-padding-sides">
+                <div class="col-7 col-md-12 col-lg-7 no-padding-sides" *ngIf="products[product].quantity > 0">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <button class="btn btn-secondary" type="button" id="count_{{row[product].name | lowercase | noSpecialChr}}">Añadir</button>
+                      <button class="btn btn-secondary" type="button" id="count_{{row[product].name | lowercase | noSpecialChr}}" (click)="addToCart($event.target)">Añadir</button>
                     </div>
-                    <input type="number" class="form-control" id="input_{{row[product].name | lowercase | noSpecialChr}}" value="{{row[product].count}}" />
+                    <input type="number" class="form-control" id="input_{{row[product].name | lowercase | noSpecialChr}}" value="{{row[product].count}}" min="1" max="{{products[product].quantity}}"/>
                   </div>
                 </div>
               </div>

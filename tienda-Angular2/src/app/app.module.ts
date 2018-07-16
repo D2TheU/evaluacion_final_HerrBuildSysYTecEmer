@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CartComponent } from './cart/cart.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
+import { CartService } from './services/cart.service';
 import { HttpService } from './services/http.service';
 import { HelperService } from './services/helper.service';
 
@@ -34,7 +35,7 @@ import { FilterProductPipe } from './filter-product.pipe';
     HttpModule,
     L3RoutingModule
   ],
-  providers: [HttpService, HelperService],
+  providers: [CartService, HttpService, HelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
