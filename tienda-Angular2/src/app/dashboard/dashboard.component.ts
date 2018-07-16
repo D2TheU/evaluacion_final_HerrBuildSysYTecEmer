@@ -37,6 +37,17 @@ export class DashboardComponent implements OnInit {
     this.filter = value.trim();
   }
 
+  showDetails(target) {
+      var product = target.id.substring(8);
+      this.details = true;
+      this.detailProduct = this.products[product];
+  }
+
+  hideDetails() {
+      this.details = false;
+      this.detailProduct = {};
+  }
+
   // addProduct(name, file, price) {
   //   this.httpService.sendProduct({ name: name, file: file, price: price, quantity: 100, count: 1 })
   //     .subscribe(

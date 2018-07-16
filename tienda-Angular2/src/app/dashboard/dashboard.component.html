@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="row no-margin-sides">
-      <div class="col-12 catalog-content">
+      <div class="col-12 catalog-content" *ngIf='!details'>
         <div class="row no-margin-sides" *ngFor="let row of products | filterProduct: filter">
           <div class="card col-md-3" *ngFor="let product of row | keyvalue">
             <img class="card-img-top" src="img/{{row[product].file}}" alt="Card image cap" />
@@ -32,7 +32,7 @@
               <p class="card-text"><strong>Unidades disponibles: </strong>{{row[product].quantity}}</p>
               <div class="row no-margin-sides card-bottom">
                 <div class="col-5 col-md-12 col-lg-5 no-padding-sides">
-                  <button class="btn btn-primary" id="details_{{row[product].name | lowercase | noSpecialChr}}">Ver más</button>
+                  <button class="btn btn-primary" id="details_{{row[product].name | lowercase | noSpecialChr}}" (click)="showDetails($event.target)">Ver más</button>
                 </div>
                 <div class="col-7 col-md-12 col-lg-7 no-padding-sides">
                   <div class="input-group">
@@ -46,6 +46,18 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="col-12 details-content" *ngIf='details'>
+        <div class="row no-margin-sides">
+          <div class="card col-md-5" id="card-details">
+            <img class="card-img-detail" src="/img/{{detailProduct.file}}" alt="Card image cap" />
+          </div>
+          <div class="col-md-5" id="info-details">
+            <p class="card-text"><strong>Precio: </strong>${{detailProduct.price}}</p>
+            <p class="card-text"><strong>Unidades disponibles: </strong>{{detailProduct.quantity}}</p>
+          </div>
+        </div>
+        <button class="btn btn-outline-secondary" id="showCatalog" (click)="hideDetails()">Atrás</button>
       </div>
     </div>
   </div>
