@@ -8,7 +8,6 @@ import { HelperService } from '../services/helpers.service';
 })
 export class NavbarComponent implements OnInit {
 
-  showBadge = false;
   badgeCount = 0;
   @Input() shoppingCart: Object;
 
@@ -16,9 +15,14 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     if (this.helper.objectLength(this.shoppingCart) > 0) {
-        this.showBadge = true;
         this.badgeCount = this.helper.objectLength(this.shoppingCart);
     }
+  }
+  isCartEmpty(){
+      return this.helper.isObjectEmpty(this.shoppingCart);
+  }
+  cartLength(){
+      return this.helper.objectLength(this.shoppingCart);
   }
 
 }
