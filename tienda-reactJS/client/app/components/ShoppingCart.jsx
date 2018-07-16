@@ -124,7 +124,7 @@ class ShoppingCart extends React.Component {
                                 {cartItem}
                             </div>
                             <div className="col-md-6 order-first order-md-last" id="info-details">
-                                <h3>Total: {total}</h3>
+                                <h3>Total: ${total}</h3>
                                 {checkoutGroup}
                             </div>
                         </div>
