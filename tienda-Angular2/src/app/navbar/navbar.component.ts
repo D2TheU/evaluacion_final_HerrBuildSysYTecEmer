@@ -8,16 +8,11 @@ import { HelperService } from '../services/helpers.service';
 })
 export class NavbarComponent implements OnInit {
 
-  badgeCount = 0;
   @Input() shoppingCart: Object;
 
   constructor(private helper: HelperService) { }
 
-  ngOnInit() {
-    if (this.helper.objectLength(this.shoppingCart) > 0) {
-        this.badgeCount = this.helper.objectLength(this.shoppingCart);
-    }
-  }
+  ngOnInit() { }
   isCartEmpty(){
       return this.helper.isObjectEmpty(this.shoppingCart);
   }

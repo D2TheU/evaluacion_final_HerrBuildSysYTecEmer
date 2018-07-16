@@ -5,7 +5,7 @@
       <a routerLink="/dashboard"><img src="/img/ic_dashboard.svg"/></a>
     </li>
     <li class="nav-item">
-      <a routerLink="/cart"><img src="/img/ic_shopping.svg"/><span *ngIf="showBadge" class="badge badge-pill badge-danger">{{badgeCount}}</span></a>
+      <a routerLink="/cart"><img src="/img/ic_shopping.svg"/><span *ngIf="!isCartEmpty()" class="badge badge-pill badge-danger">{{cartLength()}}</span></a>
     </li>
     <li class="nav-item">
       <a routerLink="/dashboard"><img src="/img/ic_inbox.svg"/></a>
