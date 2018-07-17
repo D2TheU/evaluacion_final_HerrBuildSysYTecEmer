@@ -22,7 +22,7 @@ class ShoppingCart extends React.Component {
 
     render() {
         let topContainer = [];
-        // Add template to topContainer.
+        // Agregar template de Contenedor superior
         topContainer.push(
             <div className="row no-margin-sides" key="top_container">
                 <div className="col-12 top-content">
@@ -35,7 +35,7 @@ class ShoppingCart extends React.Component {
                 </div>
             </div>
         );
-        // Return assembled view in containerFluid and container, add Navbar, topContainer and container
+        // Return la vista construida
         return (
             <div className="container-fluid fill-height dashboard-container">
                 <div className="container no-padding-sides">
@@ -47,7 +47,9 @@ class ShoppingCart extends React.Component {
         )
     }
 
+    // Función para pagar, actualizando productos en base de datos, vaciando carrito
     pay() {
+        // Agrecar información de carrito a productos a pagar
         let checkoutProducts = [];
         for (var item in this.state.shoppingCart) {
             checkoutProducts.push({
@@ -55,6 +57,7 @@ class ShoppingCart extends React.Component {
                 'quantity': this.state.shoppingCart[item].count
             })
         }
+        // Enviar productos a pagar a API
         request.post('/api/products/checkout').set({
             'API-Key': 'LndkOnelk2232nl23k',
             'Content-Type': 'application/json'
@@ -65,6 +68,7 @@ class ShoppingCart extends React.Component {
                 alert(err);
             } else {
                 if (res.body.result == 'ok') {
+                    // Si no hay error se vacía carrito de compras
                     this.setState({
                         shoppingCart: {}
                     });
@@ -78,19 +82,23 @@ class ShoppingCart extends React.Component {
         });
     }
 
+    // Función para cancelar carrito, vaciando carrito
     cancel() {
         this.setState({
             shoppingCart: {}
         });
     }
 
+    // Función para crear vista de Carrito de compras
     createShoppingCart() {
-        // Initialize catalog container
+        // Inicializar contenedor de carrito
         let shoppingCart = [];
-        // Initialize product row container
+        // Inicializar contenedor de cada artículo en el carrito
         var cartItem = [];
+        // Inicializar el total de carrito
         var total = 0;
-        for (var item in this.state.shoppingCart) {
+        for (var item in this.state.shoppingCart) { // Ciclar por carrito de compras
+            // Agregar vista de artículo con su información
             cartItem.push (
                 <div className="card shopping-card" id={'item-' + item} key={'item-' + item}>
                     <div className="row no-margin-sides">
@@ -105,9 +113,11 @@ class ShoppingCart extends React.Component {
                     </div>
                 </div>
             )
+            // Agregar al total el producto de número de artículos con su precio
             total += this.state.shoppingCart[item].count*this.state.shoppingCart[item].price;
         }
         var checkoutGroup = '';
+        // Validar si el carrito tiene productos para mostrar los botones de pagar y cancelar
         if (!isObjectEmpty(this.state.shoppingCart)) {
             checkoutGroup = (
                 <div className="btn-group" role="group" aria-label="Basic example">
@@ -116,6 +126,7 @@ class ShoppingCart extends React.Component {
                 </div>
             );
         }
+        // Agregar vista de carrito construida a contenedor de carrito
         shoppingCart.push (
                 <div className="row no-margin-sides" key="cart_container">
                     <div className="col-12 cart-content">
@@ -131,7 +142,7 @@ class ShoppingCart extends React.Component {
                     </div>
                 </div>
         )
-        // Return catalog container
+        // Return contenedor de carrito
         return shoppingCart;
     }
 }

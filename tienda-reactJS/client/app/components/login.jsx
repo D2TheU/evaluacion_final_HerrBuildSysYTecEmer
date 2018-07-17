@@ -18,14 +18,18 @@ class Login extends React.Component {
         }
     }
 
+    // Función para validar los campos cada vez que se detecta un input
     onChange(e) {
         var value = e.target.value.trim();
+        // Validar input dependiendo del id
         this.validate(e.target.id, value);
+        // Asignar estado ya sea a email o password respectivamente
         this.setState({
             [e.target.id]: e.target.value
         });
     }
 
+    // Función para validar correo y password, y mostrar error correspondiente
     validate(input, value) {
         switch (input) {
             case 'email':
@@ -57,13 +61,16 @@ class Login extends React.Component {
         }
     }
 
+    // Función regex para validar correo
     validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     }
 
+    // Función para detectar Enter cuanto se está en un input
+    // (1) user/email cambia el focus a password (2) password llama función login
     loginKeyPress(e) {
-        if(e.key == 'Enter'){
+        if (e.key == 'Enter') {
             if (e.target.id == 'password') {
                 this.login();
             } else {
@@ -97,10 +104,13 @@ class Login extends React.Component {
         )
     }
 
+    // Función de login
     login() {
         var email = document.getElementById('email').value.trim();
         var password = document.getElementById('password').value;
+        // Validar que los inputs tienen información
         if (email != '' && password != '') {
+            // Mandar post a Api de Login
             request.post('/api/login').set({
                 'API-Key': 'LndkOnelk2232nl23k',
                 'Content-Type': 'application/json'
@@ -111,9 +121,11 @@ class Login extends React.Component {
                 if (err) {
                     alert(err);
                 } else {
+                    // Si la respuesta es login se redirige al tablero
                     if (res.body.result == 'login') {
                         this.props.history.push('/dashboard');
                     } else {
+                        // Si no es login se muestra mensaje de contraseña incorrecta.
                         this.setState({
                             password: '',
                             passwordError: ' is-invalid',
@@ -123,6 +135,7 @@ class Login extends React.Component {
                 }
             });
         } else {
+            // Algun campo está vacio, identificar cual, validarlo y mostrar etiquetas de error.
             if (email == '') {
                 this.setState({
                     email: '',

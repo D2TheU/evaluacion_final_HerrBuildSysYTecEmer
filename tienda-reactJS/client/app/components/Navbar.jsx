@@ -10,13 +10,11 @@ class Navbar extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-
-        }
     }
 
     render() {
         let badge = [];
+        // Agregar span de contador de carrito si carrito tiene productos
         if (objectLength(this.props.shoppingCart) > 0) {
             badge.push(
                 <span className="badge badge-pill badge-danger" key="kart_badge">{objectLength(this.props.shoppingCart)}</span>

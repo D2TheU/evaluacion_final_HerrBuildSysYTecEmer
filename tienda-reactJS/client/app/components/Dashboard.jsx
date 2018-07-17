@@ -23,27 +23,31 @@ class Dashboard extends React.Component {
         }
     }
 
+    // Función para validar los campos cada vez que se detecta un input
     onAddChange(e) {
-        // Get value of input
+        // Obtener valor de input
         let value = e.target.value;
-        // Get product name
+        // Obtener nombre de input
         let product = e.target.id.substr(6);
-        // Get mas value of product
+        // Obtener cantidad máxima del producto
         let maxValue = this.state.products[product].quantity;
+        // Verificar si el valor a agregar es menos o igual a la cantidad
         if (0 < value && value <= maxValue ) {
-            // Creating copy of object
+            // Crear copia de objeto
             let products = Object.assign({}, this.state.products);
-            // Updating value
+            // Actualizar valor en copia
             products[product].count = parseInt(value);
-            // setState of all products
+            // Asignar copia a estado de produtos
             this.setState({products});
         }
     }
 
+    // Función para asignar el filtro mientras se teclea
     onSearchChange(e) {
         this.setState({filter: removeSpecialChr(e.target.value)});
     }
 
+    // Función para mostrar detalle de producto
     showDetails(e) {
         var product = e.target.id.substr(8);
         this.setState({
@@ -52,6 +56,7 @@ class Dashboard extends React.Component {
         });
     }
 
+    // Función para ocultar detalles y mostrar catálogo
     hideDetails(e) {
         var product = e.target.id.substr(8);
         this.setState({
@@ -60,30 +65,31 @@ class Dashboard extends React.Component {
         });
     }
 
+    // Función para agregar a carrito
     addToCart(e) {
-        // Get product name
+        // Obtener nombre de producto
         let product = e.target.id.substr(6);
         if (this.state.products[product].quantity > 0) {
-            // Creating copy of object
+            // Crear copias de objetos
             let shoppingCart = Object.assign({}, this.state.shoppingCart);
             let productObj = Object.assign({}, this.state.products[product]);
-            // Updating value
+            // Agregar o actualizar producto en carrito
             if (shoppingCart[product] === undefined) {
                 shoppingCart[product] = productObj;
             } else {
                 shoppingCart[product].count += productObj.count;
             }
-            // setState of all shoppingCart
+            // Asignar copia a estado de carrito
             this.setState({shoppingCart});
-            // Creating copy of object
+            // Crear copia de los productos
             let products = Object.assign({}, this.state.products);
-            // Updating value
+            // Actualizar cantidad del producto agregado
             products[product].quantity = products[product].quantity - products[product].count;
-
+            // Actualizar count del producto para modificat input
             if (products[product].quantity < products[product].count) {
                 products[product].count = products[product].quantity;
             }
-            // setState of all products
+            // Asignar copia a estado de produtos
             this.setState({products});
         }
     }
@@ -92,14 +98,14 @@ class Dashboard extends React.Component {
         let container = [];
         let topContainer = [];
         let topContainerContent = [];
-        if (this.state.details) { // Will show details view
-            // Add details title to topContainerContent
+        if (this.state.details) { // Validar si se mostrará vista de detalle
+            // Agregar título de Detalle basado en el nombre del producto
             topContainerContent.push(
                 <div className="col-md-9 title-container" key="details_title">
                     <h1>{this.state.detailProduct.name}</h1>
                 </div>
             )
-            // Add details body to container
+            // Agregar contenido de detalle
             container.push (
                     <div className="row no-margin-sides" key="details_container">
                         <div className="col-12 details-content">
@@ -116,14 +122,14 @@ class Dashboard extends React.Component {
                         </div>
                     </div>
             )
-        } else { // Will show catalog view
-            // Add catalog title to topContainerContent
+        } else { // Se mostrará catlalogo
+            // Agregar título de Catálogo
             topContainerContent.push(
                 <div className="col-md-9 title-container" key="catalog_title">
                     <h1>Catálogo de productos</h1>
                 </div>
             )
-            // Add catalog search view to topContainerContent
+            // Agregar componente de búsqueda
             topContainerContent.push(
                 <div className="col-md-3 search-container" key="catalog_search">
                     <p>¿Qué estás buscando?</p>
@@ -135,7 +141,7 @@ class Dashboard extends React.Component {
                     </div>
                 </div>
             )
-            // Add catalog body to container
+            // Agregar catálogo al contenedor
             container.push (
                     <div className="row no-margin-sides" key="catalog_container">
                         <div className="col-12 catalog-content">
@@ -144,7 +150,7 @@ class Dashboard extends React.Component {
                     </div>
             )
         }
-        // Wrap topContainerContent and add to topContainer
+        // Contener el contenedor superior
         topContainer.push(
             <div className="row no-margin-sides" key="top_container">
                 <div className="col-12 top-content">
@@ -155,7 +161,7 @@ class Dashboard extends React.Component {
                 </div>
             </div>
         );
-        // Return assembled view in containerFluid and container, add Navbar, topContainer and container
+        // Return la vista construida
         return (
             <div className="container-fluid fill-height dashboard-container">
                 <div className="container no-padding-sides">
@@ -167,10 +173,12 @@ class Dashboard extends React.Component {
         )
     }
 
+    // Cambiar estado de mouted a true si se va montar
     componentWillMount() {
         this.state.mounted = true
     }
 
+    // Si se montó la vista llamar a API para obtener catálogo
     componentDidMount(){
         request.get('/api/products').set({
             'API-Key': 'LndkOnelk2232nl23k',
@@ -179,35 +187,42 @@ class Dashboard extends React.Component {
             if (err) {
                 alert(err);
             } else {
+                // Si no hay error obtener cuerpo de respuesta
                 var products = res.body;
+                // Si la vista está montada (el asignar states en vistas desmontadas marca un error/warning)
                 if (this.state.mounted) {
+                    // Actualizar cantidad de cada producto por si el carrito tiene ese objeto
                     for (var product in products) {
                         if (this.state.shoppingCart.hasOwnProperty(product)) {
                             products[product].quantity = products[product].quantity - this.state.shoppingCart[product].count;
                         }
                     }
+                    // Asignar estado de produtos
                     this.setState({products: products});
                 }
             }
         });
     }
 
+    // Cambiar estado de mouted a false si se desmontará
     componentWillUnmount () {
         this.state.mounted = false
     }
 
+    // Función de crear catálogo
     createCatalog() {
-        // Initialize catalog container
+        // Inicializar contenedor de catálogo
         let catalog = [];
-        // Initialize product row container
+        // Inicializar el contenedor de filas del catálogo
         var row = [];
-        for(var product in this.state.products) { // Cycle through all products
-            // If filter is not empty and product name doesn't contain filter skip product.
+        for(var product in this.state.products) { // Ciclar por cada los productos
+            // Si el filtro no está vacío y el nombre del producto no contiene el filtro, este no se mostrará y se salta
             if (this.state.filter != '' && product.indexOf(this.state.filter) == -1) {
                 continue;
             }
-            // Push product view to row with current product's information
+            // Inicializar inputGroup para agregar a carrito
             var inputGroup = '';
+            // Validar si hay cantidad que se pueda agregar del producto
             if (this.state.products[product].quantity > 0) {
                 inputGroup = (
                     <div className="input-group">
@@ -218,6 +233,7 @@ class Dashboard extends React.Component {
                     </div>
                 );
             }
+            // Agregar la información de producto al contenedor de filas
             row.push(
                 <div className="card col-md-3" key={'card-' + removeSpecialChr(product)}>
                     <img className="card-img-top" src={'/assets/img/' + this.state.products[product].file} alt="Card image cap"/>
@@ -236,24 +252,24 @@ class Dashboard extends React.Component {
                     </div>
                 </div>
             );
-            // If row has reach its maximum of 4
+            // Validar si la fila tiene un tamaño de 4
             if (row.length == 4) {
-                // Add row to catalog container with its row wrapper
+                // Agregar la fila al catálogo en su contenedor de fila
                 catalog.push(
                     <div className="row no-margin-sides" key={'row_' + (catalog.length + row.length)}>{row}</div>
                 );
-                // Empty row to avoid duplicates
+                // Vaciar contenedor de filas para evitar duplicar productos
                 row = [];
             }
         }
-        // Products' for has finished but row wasn't added to catalog
-        if (row.length < 4) {
-            // Add row to catalog container with its row wrapper
+        // Validar si la fila tiene menos de 4 productos pero no está vacío
+        if (0 < row.length && row.length < 4) {
+            // Agregar la fila faltante al catálogo en su contenedor de fila
             catalog.push(
                 <div className="row no-margin-sides" key={'row_' + row.length}>{row}</div>
             );
         }
-        // Return catalog container
+        // Return contenedor de catálogo
         return catalog;
     }
 }
