@@ -39,7 +39,7 @@
                     <div class="input-group-prepend">
                       <button class="btn btn-secondary" type="button" id="count_{{row[product].name | lowercase | noSpecialChr}}" (click)="addToCart($event.target)">Añadir</button>
                     </div>
-                    <input type="number" class="form-control" id="input_{{row[product].name | lowercase | noSpecialChr}}" value="{{row[product].count}}" min="1" max="{{products[product].quantity}}"/>
+                    <input type="number" class="form-control" id="input_{{row[product].name | lowercase | noSpecialChr}}" value="1" min="1" max="{{products[product].quantity}}"/>
                   </div>
                 </div>
               </div>
