@@ -115,9 +115,9 @@ export class DashboardComponent implements OnInit {
       this.cartService.setCart(shoppingCart);
       // Obtener carrito ordenado de Local Storage y guardar en propiedad de carrito del componente
       this.shoppingCart = this.cartService.getCart();
-      // Creac copia de los productos
+      // Crear copia de los productos
       let products = Object.assign({}, this.products);
-      // Actualizar cantidad del producto agragado
+      // Actualizar cantidad del producto agregado
       products[product].quantity = products[product].quantity - productObj.quantity;
       // Guardar lista actualizada de productos.
       this.products = products;

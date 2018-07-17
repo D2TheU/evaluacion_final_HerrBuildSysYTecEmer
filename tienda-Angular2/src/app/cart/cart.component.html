@@ -30,7 +30,7 @@
           </div>
           <div class="col-md-6 order-first order-md-last" id="info-details">
             <h3>Total: ${{getTotal()}}</h3>
-            <div class="btn-group" role="group" aria-label="Basic example">
+            <div class="btn-group" role="group" aria-label="Basic example" *ngIf="!isCartEmpty()">
               <button class="btn btn-outline-secondary" id="showCatalog" (click)="cancel()">Cancelar</button>
               <button class="btn btn-outline-secondary" id="showCatalog" (click)="pay()">Pagar</button>
             </div>

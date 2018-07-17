@@ -22,6 +22,11 @@ export class CartComponent implements OnInit {
   ngOnInit() {
   }
 
+  // Función para regresar si el carrito está vacío
+  isCartEmpty() {
+    return this.helperService.isObjectEmpty(this.shoppingCart);
+  }
+
   // Función para obtener el total de los productos del carrito
   getTotal() {
     let total = 0;
