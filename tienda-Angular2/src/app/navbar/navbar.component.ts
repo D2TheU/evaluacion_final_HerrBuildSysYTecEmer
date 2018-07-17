@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HelperService } from '../services/helpers.service';
+import { HelperService } from '../services/helper.service';
 
 @Component({
   selector: 'app-navbar',

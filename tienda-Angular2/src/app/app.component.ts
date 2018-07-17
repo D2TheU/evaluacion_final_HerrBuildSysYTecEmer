@@ -3,7 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CartComponent } from './cart/cart.component';
 
-import { HelperService } from './services/helpers.service';
+import { HelperService } from './services/helper.service';
 
 @Component({
   selector: 'app-root',
