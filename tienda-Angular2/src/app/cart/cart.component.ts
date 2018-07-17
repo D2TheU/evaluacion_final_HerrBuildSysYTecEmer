@@ -49,8 +49,11 @@ export class CartComponent implements OnInit {
           for (let id in data) {
             // Obtener nombre en minúsculas y sin caracteres especiales
             let name = this.helperService.removeSpecialChr(data[id].name.toLowerCase());
+            // Ciclar el carrito de compras
             for (let item in this.shoppingCart) {
+              // Verificar si el producto está en el carrido de compras(item es igual al nombre en minusculas y sin caracteres especiales)
               if (name == item) {
+                // Modificar el objeto con la nueva cantidad, quitando la que se compró
                 data[id] = {
                   file: this.shoppingCart[item].file,
                   name: this.shoppingCart[item].name,
@@ -60,9 +63,11 @@ export class CartComponent implements OnInit {
               }
             }
           }
+          // Se manda lista actualizada a la base de datos
           this.httpService.updateProducts(data)
             .subscribe(
               (data: Response) => {
+                // Si el estado es 200 quiere decir que todo salió bien, de lo contrario mostrar error.
                 if (data.status == 200) {
                   this.shoppingCart = {};
                   this.cartService.emptyCart();
