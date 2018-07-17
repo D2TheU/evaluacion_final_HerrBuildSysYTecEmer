@@ -17,6 +17,11 @@ export class HttpService {
       .map((response: Response) => response.json());
   }
 
+  updateProducts(products: any) {
+    const productData = JSON.stringify(products);
+    return this.http.put('https://tienda-nextu.firebaseio.com/productos/.json', productData);
+  }
+
   // sendUser(user: any) {
   //   const userData = JSON.stringify(user);
   //   return this.http.post('https://tienda-nextu.firebaseio.com/usuarios/.json', userData)

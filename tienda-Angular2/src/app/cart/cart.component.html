@@ -15,25 +15,25 @@
       <div class="col-12 cart-content">
         <div class="row no-margin-sides">
           <div class="col-md-6" id="all-items">
-                <div class="card shopping-card" *ngFor="let item of shoppingCart | keyvalue">
-                  <div class="row no-margin-sides">
-                    <div class="col-md-4">
-                      <img class="item-img-detail" src="/img/{{shoppingCart[item].file}}" alt="Card image cap" />
-                    </div>
-                    <div class="col-md-8">
-                      <h5 class="card-title">{{shoppingCart[item].name}}</h5>
-                      <p class="card-text"><strong>Unidades: </strong>{{shoppingCart[item].count}}</p>
-                      <p class="card-text"><strong>Subtotal: </strong>${{shoppingCart[item].count*shoppingCart[item].price}}</p>
-                    </div>
-                  </div>
+            <div class="card shopping-card" *ngFor="let item of shoppingCart | keyvalue">
+              <div class="row no-margin-sides">
+                <div class="col-md-4">
+                  <img class="item-img-detail" src="/img/{{shoppingCart[item].file}}" alt="Card image cap" />
                 </div>
+                <div class="col-md-8">
+                  <h5 class="card-title">{{shoppingCart[item].name}}</h5>
+                  <p class="card-text"><strong>Unidades: </strong>{{shoppingCart[item].quantity}}</p>
+                  <p class="card-text"><strong>Subtotal: </strong>${{shoppingCart[item].quantity*shoppingCart[item].price}}</p>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="col-md-6 order-first order-md-last" id="info-details">
             <h3>Total: ${{getTotal()}}</h3>
             <div class="btn-group" role="group" aria-label="Basic example">
-                    <button class="btn btn-outline-secondary" id="showCatalog" (click)="cancel()">Cancelar</button>
-                    <button class="btn btn-outline-secondary" id="showCatalog" >Pagar</button>
-                </div>
+              <button class="btn btn-outline-secondary" id="showCatalog" (click)="cancel()">Cancelar</button>
+              <button class="btn btn-outline-secondary" id="showCatalog" (click)="pay()">Pagar</button>
+            </div>
           </div>
         </div>
       </div>
