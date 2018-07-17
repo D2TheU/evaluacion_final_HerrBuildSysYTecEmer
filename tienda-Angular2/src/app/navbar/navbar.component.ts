@@ -8,16 +8,21 @@ import { HelperService } from '../services/helpers.service';
 })
 export class NavbarComponent implements OnInit {
 
+  // Input de carrito de componente padre
   @Input() shoppingCart: Object;
 
   constructor(private helper: HelperService) { }
 
   ngOnInit() { }
-  isCartEmpty(){
-      return this.helper.isObjectEmpty(this.shoppingCart);
+
+  // Función para regresar si el carrito está vacío
+  isCartEmpty() {
+    return this.helper.isObjectEmpty(this.shoppingCart);
   }
-  cartLength(){
-      return this.helper.objectLength(this.shoppingCart);
+
+  // Función para regresar tamaño del carrito
+  cartLength() {
+    return this.helper.objectLength(this.shoppingCart);
   }
 
 }

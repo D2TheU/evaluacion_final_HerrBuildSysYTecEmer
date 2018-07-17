@@ -3,6 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'filterProduct'
 })
+// Pipe para filtrar los productos cuando se introdusca algo al campo filter.
 export class FilterProductPipe implements PipeTransform {
 
   transform(items: any, args?: any): any {
@@ -29,8 +30,8 @@ export class FilterProductPipe implements PipeTransform {
           }
         }
         if (parseInt(index) == productArray.length - 1 && objCount != 4) {
-           filteredArray.push(obj);
-         }
+          filteredArray.push(obj);
+        }
       }
     }
 

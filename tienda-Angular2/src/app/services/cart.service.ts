@@ -1,29 +1,31 @@
 import { Injectable } from '@angular/core';
+import { HelperService } from '../services/helper.service';
+
 
 @Injectable()
 export class CartService {
 
   private CART_KEY = 'cart';
 
-  constructor() { }
+  constructor(private helperService: HelperService) { }
 
+  // Guardar carrito a Local Storage ordenado
   setCart(newCart) {
-    let orderedCart = {};
-    Object.keys(newCart).sort().forEach(function(key) {
-      orderedCart[key] = newCart[key];
-    });
-    localStorage.setItem(this.CART_KEY, JSON.stringify(orderedCart));
+    localStorage.setItem(this.CART_KEY, JSON.stringify(this.helperService.orderObject(newCart)));
   }
 
+  // Guardar carrito vacío a Local Storage ordenado
+  emptyCart() {
+    localStorage.setItem(this.CART_KEY, JSON.stringify({}));
+  }
+
+  // Obtener carrito desde Local Storage ordenado
   getCart() {
+    // Si no existe carrito en Local Storage crear uno vacío
     if (localStorage.getItem(this.CART_KEY) === null) {
       localStorage.setItem(this.CART_KEY, JSON.stringify({}));
     }
-    let localCart = JSON.parse(localStorage.getItem(this.CART_KEY));
-    let orderedCart = {};
-    Object.keys(localCart).sort().forEach(function(key) {
-      orderedCart[key] = localCart[key];
-    });
-    return orderedCart;
+    // Regresar carrito ordenado
+    return this.helperService.orderObject(JSON.parse(localStorage.getItem(this.CART_KEY)));
   }
 }
